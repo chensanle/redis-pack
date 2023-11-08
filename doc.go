@@ -1,5 +1,4 @@
 /*
-	基于redigo的封装
+基于redigo的封装
 */
-package redigo_pack
-
+package redis_pack

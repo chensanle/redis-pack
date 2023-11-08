@@ -1,4 +1,4 @@
-package redigo_pack
+package redis_pack
 
 import "github.com/gomodule/redigo/redis"
 
@@ -29,21 +29,21 @@ func (s *stringRds) SetNX(key string, value interface{}) *Reply {
 	return getReply(c.Do("setnx", key, value))
 }
 
-// 	设置并返回旧值
+// 设置并返回旧值
 func (s *stringRds) GetSet(key string, value interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("getset", key, value))
 }
 
-// 	设置key并指定生存时间
+// 设置key并指定生存时间
 func (s *stringRds) SetEX(key string, value interface{}, seconds int64) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("setex", key, seconds, value))
 }
 
-// 	设置key值并指定生存时间(毫秒)
+// 设置key值并指定生存时间(毫秒)
 func (s *stringRds) PSetEX(key string, value interface{}, milliseconds int64) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -57,7 +57,7 @@ func (s *stringRds) SetRange(key string, value interface{}, offset int64) *Reply
 	return getReply(c.Do("setrange", key, offset, value))
 }
 
-// 	获取子字符串
+// 获取子字符串
 func (s *stringRds) GetRange(key string, start, end int64) *Reply {
 	c := pool.Get()
 	defer c.Close()

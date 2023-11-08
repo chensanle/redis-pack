@@ -1,4 +1,4 @@
-package redigo_pack
+package redis_pack
 
 type dbRds struct {
 }

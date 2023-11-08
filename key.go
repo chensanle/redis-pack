@@ -1,18 +1,18 @@
-package redigo_pack
+package redis_pack
 
 import "github.com/gomodule/redigo/redis"
 
 type keyRds struct {
 }
 
-// 	查找键 [*模糊查找]
+// 查找键 [*模糊查找]
 func (k *keyRds) Keys(key string) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("keys", key))
 }
 
-// 	判断key是否存在
+// 判断key是否存在
 func (k *keyRds) Exists(key string) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -40,7 +40,7 @@ func (k *keyRds) Del(keys ...string) *Reply {
 	return getReply(c.Do("del", redis.Args{}.AddFlat(keys)...))
 }
 
-//重命名
+// 重命名
 func (k *keyRds) Rename(key, newKey string) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -54,7 +54,7 @@ func (k *keyRds) RenameNX(key, newKey string) *Reply {
 	return getReply(c.Do("renamenx", key, newKey))
 }
 
-//	序列化key
+// 序列化key
 func (k *keyRds) Dump(key string) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -110,7 +110,7 @@ func (k *keyRds) PTTL(key string) *Reply {
 	return getReply(c.Do("pttl", key))
 }
 
-//	同实例不同库间的键移动
+// 同实例不同库间的键移动
 func (k *keyRds) Move(key string, db int64) *Reply {
 	c := pool.Get()
 	defer c.Close()

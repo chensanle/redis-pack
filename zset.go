@@ -1,4 +1,4 @@
-package redigo_pack
+package redis_pack
 
 import "github.com/gomodule/redigo/redis"
 
@@ -12,28 +12,28 @@ func (z *zSetRds) ZAdd(key string, mp map[interface{}]interface{}) *Reply {
 	return getReply(c.Do("zadd", redis.Args{}.Add(key).AddFlat(mp)...))
 }
 
-// 	增加元素权重
+// 增加元素权重
 func (z *zSetRds) ZUncrBy(key string, increment, member interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("zuncrby", key, increment, member))
 }
 
-// 	增加元素权重
+// 增加元素权重
 func (z *zSetRds) ZCard(key string) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("zcard", key))
 }
 
-// 	返回指定元素的排名
+// 返回指定元素的排名
 func (z *zSetRds) ZEank(key string, member interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
 	return getReply(c.Do("zrank", key, member))
 }
 
-// 	返回指定元素的权重
+// 返回指定元素的权重
 func (z *zSetRds) ZScore(key string, member interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -70,7 +70,6 @@ func (z *zSetRds) ZRangeByScore(key string, start, stop interface{}, args ...int
 	}
 	return getReply(c.Do("zrangebyscore", key, start, stop))
 }
-
 
 // 倒序返回指定区间内的元素
 func (z *zSetRds) ZRevrange(key string, start, stop interface{}, withScore ...bool) *Reply {

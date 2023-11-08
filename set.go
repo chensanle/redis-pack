@@ -1,11 +1,11 @@
-package redigo_pack
+package redis_pack
 
 import "github.com/gomodule/redigo/redis"
 
 type setRds struct {
 }
 
-// 	添加元素
+// 添加元素
 func (h *setRds) SAdd(key string, fileds []interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
@@ -64,7 +64,7 @@ func (h *setRds) SMove(sourceKey, destinationKey string, member interface{}) *Re
 	return getReply(c.Do("smove", sourceKey, destinationKey, member))
 }
 
-//  返回一或多个集合的差集
+// 返回一或多个集合的差集
 func (h *setRds) SDiff(keys []string) *Reply {
 	c := pool.Get()
 	defer c.Close()

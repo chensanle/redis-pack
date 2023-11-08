@@ -6,7 +6,7 @@ redis的使用更简单
 支持和redigo同时使用
 
 ### 安装
-`go get -u -v github.com/newgoo/redigo-pack`
+`go get -u -v github.com/chensanle/redis-pack`
 
 ### 使用
 ```go
@@ -15,20 +15,20 @@ package main
 import (
 	"fmt"
 
-	"github.com/newgoo/redigo-pack"
+	"github.com/chensanle/redis-pack"
 )
 
 func init() {
-    redigo_pack.InitPool("", "")
+    redis_pack.InitPool("", "")
 }
 
 func main() {
-	err := redigo_pack.RedigoConn.String.Set("1", 2, 10).Error()
+	err := redis_pack.RedigoConn.String.Set("1", 2, 10).Error()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	v, err := redigo_pack.RedigoConn.String.Get("1").Int64()
+	v, err := redis_pack.RedigoConn.String.Get("1").Int64()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -41,9 +41,4 @@ func main() {
 ### License
 The MIT License.
 
-### 联系我
-如果有不足的地方，需要添加的请联系我
-newgoo: happs.lives@gmail.com
-
-### 感谢
-[vichuyongqiang](https://github.com/vichuyongqiang)提供的list的封装
+source https://github.com/newgoo/redigo-pack

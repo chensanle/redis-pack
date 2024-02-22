@@ -37,6 +37,10 @@ func (r *Reply) float64() (float64, error) {
 	return redis.Float64(r.reply, r.error)
 }
 
+func (r *Reply) Float64() (float64, error) {
+	return redis.Float64(r.reply, r.error)
+}
+
 func (r *Reply) String() (string, error) {
 	return redis.String(r.reply, r.error)
 }

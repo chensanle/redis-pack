@@ -57,6 +57,13 @@ func (z *zSetRds) ZRange(key string, start, stop interface{}, withScore ...bool)
 	return getReply(c.Do("zrange", key, start, stop))
 }
 
+func (z *zSetRds) zrem(key string, fileds interface{}) *Reply {
+	c := pool.Get()
+	defer c.Close()
+
+	return getReply(c.Do("zrem", redis.Args{}.Add(key).AddFlat(fileds)...))
+}
+
 func (z *zSetRds) ZRangeByScore(key string, start, stop interface{}, args ...interface{}) *Reply {
 	// ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]
 	c := pool.Get()

@@ -21,3 +21,7 @@ func TestZset(t *testing.T) {
 func a(arg interface{}) interface{} {
 	return arg
 }
+
+func Test_zSetRds_zrem(t *testing.T) {
+	//z.zrem(tt.args.key, tt.args.fileds)
+}

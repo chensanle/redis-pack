@@ -57,7 +57,7 @@ func (z *zSetRds) ZRange(key string, start, stop interface{}, withScore ...bool)
 	return getReply(c.Do("zrange", key, start, stop))
 }
 
-func (z *zSetRds) zrem(key string, fileds interface{}) *Reply {
+func (z *zSetRds) Zrem(key string, fileds interface{}) *Reply {
 	c := pool.Get()
 	defer c.Close()
 

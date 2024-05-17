@@ -19,7 +19,7 @@ import (
 )
 
 func init() {
-    redis_pack.InitPool("", "")
+    redis_pack.NewConnectionWithFile("", "")
 }
 
 func main() {

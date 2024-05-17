@@ -1,12 +1,11 @@
 package redis_pack
 
 import (
-	"github.com/gomodule/redigo/redis"
 	"testing"
 )
 
 func TestBitRds_Bit(t *testing.T) {
-	NewConnectionByPool(&redis.Pool{})
+	_ = NewConnectionWithFile("127.0.0.1:6379", "")
 	type bit struct {
 		key    string
 		offset int64

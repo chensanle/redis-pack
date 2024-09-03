@@ -101,3 +101,11 @@ func (r *Reply) ScanStruct(obj interface{}) error {
 	}
 	return redis.ScanStruct(v, obj)
 }
+
+func (r *Reply) ScanSlice(obj interface{}) error {
+	v, err := r.Values()
+	if err != nil {
+		return err
+	}
+	return redis.ScanSlice(v, obj)
+}

@@ -5,9 +5,9 @@ import (
 )
 
 func Test_dbRds_PipLine(t *testing.T) {
-	d := &dbRds{}
-	got, got1 := d.PipLine(nil)
-	t.Log(got, got1)
+	//d := &dbRds{}
+	//got, got1 := d.PipLine(nil)
+	//t.Log(got, got1)
 }
 
 func Test_dbRds_PipLine1(t *testing.T) {

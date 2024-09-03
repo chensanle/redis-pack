@@ -83,7 +83,7 @@ func (z *zSetRds) ZRevrange(key string, start, stop interface{}, withScore ...bo
 	c := pool.Get()
 	defer c.Close()
 	if len(withScore) > 0 && withScore[0] {
-		return getReply(c.Do("zrevrange", key, start, stop, withScore))
+		return getReply(c.Do("zrevrange", key, start, stop, "withscores"))
 	}
 	return getReply(c.Do("zrevrange", key, start, stop))
 }

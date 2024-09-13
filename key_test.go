@@ -1,12 +1,11 @@
 package redis_pack
 
 import (
-	"github.com/gomodule/redigo/redis"
 	"testing"
 )
 
 func TestKeyRds_Key(t *testing.T) {
-	NewConnectionByPool(&redis.Pool{})
+	conn, _ := NewConnectionByPool(testPool)
 	type T struct {
 		Key   string
 		Value float64
@@ -17,12 +16,12 @@ func TestKeyRds_Key(t *testing.T) {
 		{Key: "key3", Value: 2.2},
 	}
 	for _, one := range ts {
-		err := RedigoConn.String.Set(one.Key, one.Value).error
+		err := conn.String.Set(one.Key, one.Value).error
 		if err != nil {
 			t.Error(err)
 		}
 	}
-	key, err := RedigoConn.Key.RandomKey().String()
+	key, err := conn.Key.RandomKey().String()
 	if err != nil {
 		t.Error(err)
 	}
@@ -36,21 +35,21 @@ func TestKeyRds_Key(t *testing.T) {
 	}
 
 	for _, one := range ts {
-		err := RedigoConn.Key.Rename(one.Key, one.Key+"1").error
+		err := conn.Key.Rename(one.Key, one.Key+"1").error
 		if err != nil {
 			t.Error(err)
 		}
 	}
 
 	for _, one := range ts {
-		exist, err := RedigoConn.Key.Exists(one.Key).Bool()
+		exist, err := conn.Key.Exists(one.Key).Bool()
 		if err != nil {
 			t.Error(err)
 		}
 		if exist {
 			t.Error("rename 出错")
 		}
-		exist, err = RedigoConn.Key.Exists(one.Key + "1").Bool()
+		exist, err = conn.Key.Exists(one.Key + "1").Bool()
 		if err != nil {
 			t.Error(err)
 		}
@@ -60,11 +59,11 @@ func TestKeyRds_Key(t *testing.T) {
 	}
 
 	for _, one := range ts {
-		err = RedigoConn.Key.Expire(one.Key+"1", 1000).error
+		err = conn.Key.Expire(one.Key+"1", 1000).error
 		if err != nil {
 			t.Error(err)
 		}
-		ttl, err := RedigoConn.Key.TTL(one.Key + "1").Int64()
+		ttl, err := conn.Key.TTL(one.Key + "1").Int64()
 		if err != nil {
 			t.Error(err)
 		}
@@ -74,18 +73,18 @@ func TestKeyRds_Key(t *testing.T) {
 	}
 
 	for _, one := range ts {
-		err = RedigoConn.Key.Move(one.Key+"1", 2).error
+		err = conn.Key.Move(one.Key+"1", 2).error
 		if err != nil {
 			t.Error(err)
 		}
 	}
 
-	err = RedigoConn.Db.SelectDb(2).error
+	err = conn.Db.SelectDb(2).error
 	if err != nil {
 		t.Error(err)
 	}
 	for _, one := range ts {
-		exist, err := RedigoConn.Key.Exists(one.Key + "1").Bool()
+		exist, err := conn.Key.Exists(one.Key + "1").Bool()
 		if err != nil {
 			t.Error(err)
 		}
@@ -97,13 +96,13 @@ func TestKeyRds_Key(t *testing.T) {
 }
 
 func TestKeyRds_Del(t *testing.T) {
-	NewConnectionByPool(&redis.Pool{})
+	conn, _ := NewConnectionByPool(testPool)
 	key := "1"
-	err := RedigoConn.String.Set(key, 2, 10).error
+	err := conn.String.Set(key, 2, 10).error
 	if err != nil {
 		t.Error(err)
 	}
-	exist, err := RedigoConn.Key.Exists(key).Bool()
+	exist, err := conn.Key.Exists(key).Bool()
 	if err != nil {
 		t.Error(err)
 	}
@@ -111,11 +110,11 @@ func TestKeyRds_Del(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = RedigoConn.Key.Del(key).error
+	err = conn.Key.Del(key).error
 	if err != nil {
 		t.Error(err)
 	}
-	exist, err = RedigoConn.Key.Exists(key).Bool()
+	exist, err = conn.Key.Exists(key).Bool()
 	if err != nil {
 		t.Error(err)
 	}

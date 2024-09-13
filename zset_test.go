@@ -1,14 +1,13 @@
 package redis_pack
 
 import (
-	"github.com/gomodule/redigo/redis"
 	"testing"
 )
 
 func Test_zSetRds_ZAdd(t *testing.T) {
-	NewConnectionByPool(&redis.Pool{})
+	conn, _ := NewConnectionByPool(testPool)
 
-	err := RedigoConn.ZSet.ZAdd("key", map[interface{}]interface{}{3: 3, 1: 4, 5: 5}).error
+	err := conn.ZSet.ZAdd("key", map[interface{}]interface{}{3: 3, 1: 4, 5: 5}).error
 	if err != nil {
 		t.Error(err)
 	}
@@ -22,10 +21,10 @@ type ZSetUnion struct {
 func TestZsetReveng(t *testing.T) {
 	// redis-server --port 6379
 	// go test -run TestZsetReveng -v
-	_ = NewConnectionWithFile("127.0.0.1:6379", "")
+	conn, _ := NewConnectionByPool(testPool)
 
 	sruRes := make([]ZSetUnion, 0)
-	err := RedigoConn.ZSet.ZRevrange("clz", 0, -1, true).ScanSlice(&sruRes)
+	err := conn.ZSet.ZRevrange("clz", 0, -1, true).ScanSlice(&sruRes)
 	t.Logf("err1: %+v", err)
 
 	//err = redis.ScanSlice(res, &sruRes)
@@ -39,16 +38,4 @@ func TestZsetReveng(t *testing.T) {
 		t.Logf("%+v", val)
 	}
 
-}
-
-func TestZset(t *testing.T) {
-	t.Log(a(15).(int))
-}
-
-func a(arg interface{}) interface{} {
-	return arg
-}
-
-func Test_zSetRds_zrem(t *testing.T) {
-	//z.zrem(tt.args.key, tt.args.fileds)
 }

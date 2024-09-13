@@ -1,11 +1,14 @@
 package redis_pack
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestStringRds_Get(t *testing.T) {
-	v, err := RedigoConn.String.Get("namssss").Int64()
+	conn, _ := NewConnectionByPool(testPool)
+	conn.String.Set("namssss", 12)
+	_, err := conn.String.Get("namssss").Int64()
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(v)
 }

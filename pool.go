@@ -7,10 +7,10 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
-var pool *redis.Pool
-
-func initPool(addr, password string) {
-	pool = &redis.Pool{
+// var pool *redis.Pool
+func initPool(addr, password string) RedigoPack {
+	pack := RedigoPack{}
+	pool := &redis.Pool{
 		MaxIdle:     10,
 		MaxActive:   200,
 		IdleTimeout: 180 * time.Second,
@@ -19,10 +19,32 @@ func initPool(addr, password string) {
 			return setDialog(addr, password)
 		},
 	}
+
+	pack.String.pool = pool
+	pack.List.pool = pool
+	pack.Hash.pool = pool
+	pack.Key.pool = pool
+	pack.Set.pool = pool
+	pack.ZSet.pool = pool
+	pack.Bit.pool = pool
+	pack.Db.pool = pool
+
+	return pack
 }
 
-func initPoolByOld(old *redis.Pool) {
-	pool = old
+func initPoolByOld(pool *redis.Pool) RedigoPack {
+	pack := RedigoPack{}
+
+	pack.String.pool = pool
+	pack.List.pool = pool
+	pack.Hash.pool = pool
+	pack.Key.pool = pool
+	pack.Set.pool = pool
+	pack.ZSet.pool = pool
+	pack.Bit.pool = pool
+	pack.Db.pool = pool
+
+	return pack
 }
 
 func setDialog(addr, password string) (redis.Conn, error) {
@@ -39,7 +61,7 @@ func setDialog(addr, password string) (redis.Conn, error) {
 
 	r, err := redis.String(conn.Do("PING"))
 	if err != nil || r != "PONG" {
-		log.Fatalf("failed to connect redis: %v, err: %v", addr, RedigoConn)
+		log.Fatalf("failed to connect redis: %v", addr)
 	}
 
 	return conn, nil

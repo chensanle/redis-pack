@@ -5,7 +5,7 @@ import (
 )
 
 func TestBitRds_Bit(t *testing.T) {
-	_ = NewConnectionWithFile("127.0.0.1:6379", "")
+	conn, _ := NewConnectionWithFile("127.0.0.1:6379", "")
 	type bit struct {
 		key    string
 		offset int64
@@ -19,11 +19,11 @@ func TestBitRds_Bit(t *testing.T) {
 	}
 
 	for _, bt := range md {
-		RedigoConn.Bit.SetBit(bt.key, bt.offset, bt.value)
+		conn.Bit.SetBit(bt.key, bt.offset, bt.value)
 	}
 
 	for _, bt := range md {
-		v, err := RedigoConn.Bit.GetBit(bt.key, bt.offset).Int64()
+		v, err := conn.Bit.GetBit(bt.key, bt.offset).Int64()
 		if err != nil {
 			t.Error(err)
 		}
@@ -32,7 +32,7 @@ func TestBitRds_Bit(t *testing.T) {
 		}
 	}
 
-	l, err := RedigoConn.Bit.BitCount(md[0].key).Int()
+	l, err := conn.Bit.BitCount(md[0].key).Int()
 	if err != nil {
 		t.Error(err)
 	}

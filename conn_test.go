@@ -16,7 +16,7 @@ func TestNewConnectionWithFile(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := NewConnectionWithFile(tt.args.addr, tt.args.password); (err != nil) != tt.wantErr {
+			if _, err := NewConnectionWithFile(tt.args.addr, tt.args.password); (err != nil) != tt.wantErr {
 				t.Errorf("NewConnectionWithFile() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

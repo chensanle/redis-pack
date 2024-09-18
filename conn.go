@@ -15,15 +15,14 @@ type RedigoPack struct {
 	Db     dbRds
 }
 
-var RedigoConn = new(RedigoPack)
+//var RedigoConn = new(RedigoPack)
 
-func NewConnectionWithFile(addr, password string) error {
-
-	initPool(addr, password)
-	return nil
+func NewConnectionWithFile(addr, password string) (RedigoPack, error) {
+	conn := initPool(addr, password)
+	return conn, nil
 }
 
-func NewConnectionByPool(pool2 *redis.Pool) error {
-	initPoolByOld(pool2)
-	return nil
+func NewConnectionByPool(pool2 *redis.Pool) (RedigoPack, error) {
+	conn := initPoolByOld(pool2)
+	return conn, nil
 }
